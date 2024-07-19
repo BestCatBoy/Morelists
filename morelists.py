@@ -4,15 +4,17 @@ class slider:
         return self.__list
 
     def __init__(self, *args):
-        self.__list = list(args)
+        self.__list = self.__isstr(list(args))
 
     def __str__(self):
-        return f"{self.__list}"
+        try:
+            return "".join(self.__list)
+        except:
+            return f"{self.__list}"
 
     def __getitem__(self, index: (int, slice)):
         if isinstance(index, slice):
             slice_format = self.__get_format_slice(index)
-
             return self.__list[slice_format]
 
         return self.__list[index % len(self.__list)]
@@ -38,14 +40,19 @@ class slider:
     def __get_format_slice(self, slce: slice) -> slice:
         slice_format = [
             arg % len(self.__list) if arg != None
-            else None for arg in [slce.start, slce.stop, slce.step]
-        ]
-
+            else None for arg in [slce.start, slce.stop, slce.step]]
         return slice(*slice_format)
 
     @classmethod
-    def __isslider(cls, other):
-        if isinstance(other, cls):
-            return other.__list
+    def __isslider(cls, obj):
+        if isinstance(obj, cls):
+            return obj.__list
 
-        return other
+        return obj
+
+    @classmethod
+    def __isstr(cls, obj):
+        if (len(obj) == 1) and (isinstance(obj[0], str)):
+            obj = list(obj[0])
+
+        return obj
