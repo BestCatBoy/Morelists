@@ -24,13 +24,16 @@ class slider:
         del self.__list[index % len(self.__list)]
 
     def __add__(self, other: (list, object)):
-        return slider(*(self.__list + self.__isarray(other)))
+        return slider(*(self.__list + self.__isslider(other)))
 
     def __mul__(self, other):
-        return self.__list * self.__isarray(other)
+        return self.__list * self.__isslider(other)
 
     def __eq__(self, other) -> bool:
-        return self.__list == self.__isarray(other)
+        return self.__list == self.__isslider(other)
+
+    def __set__(self):
+        return set(self.__list)
 
     def __get_format_slice(self, slce: slice) -> slice:
         slice_format = [
@@ -41,7 +44,7 @@ class slider:
         return slice(*slice_format)
 
     @classmethod
-    def __isarray(cls, other):
+    def __isslider(cls, other):
         if isinstance(other, cls):
             return other.__list
 
