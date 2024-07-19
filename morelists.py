@@ -43,6 +43,17 @@ class slider:
             else None for arg in [slce.start, slce.stop, slce.step]]
         return slice(*slice_format)
 
+    def append(self, item):
+        self.__list.append(item)
+
+    def split(self, sep = None):
+        try:
+            self.__list = "".join(self.__list)
+            self.__list = self.__list.split(sep)
+            return self.__list
+        except:
+            raise ArithmeticError("non- 'str' object has no attribute 'split'")
+
     @classmethod
     def __isslider(cls, obj):
         if isinstance(obj, cls):
@@ -56,3 +67,9 @@ class slider:
             obj = list(obj[0])
 
         return obj
+
+## append +
+## split +
+## reverse -
+## insert
+## pop
