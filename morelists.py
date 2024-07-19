@@ -20,6 +20,9 @@ class slider:
     def __setitem__(self, index: int, value):
         self.__list[index % len(self.__list)] = value
 
+    def __delitem__(self, index: int):
+        del self.__list[index % len(self.__list)]
+
     def __add__(self, other: (list, object)):
         return slider(*(self.__list + self.__isarray(other)))
 
