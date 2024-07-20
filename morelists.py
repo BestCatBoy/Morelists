@@ -16,26 +16,22 @@ class slider:
         if isinstance(index, slice):
             slice_format = self.__get_format_slice(index)
             return self.__list[slice_format]
-
         return self.__list[index % len(self.__list)]
 
-    def __setitem__(self, index: int, value):
-        self.__list[index % len(self.__list)] = value
+    def __setitem__(self, index: int, item):
+        self.__list[index % len(self.__list)] = item
 
     def __delitem__(self, index: int):
         del self.__list[index % len(self.__list)]
 
-    def __add__(self, other: (list, object)):
+    def __add__(self, other: (list, object)) -> list:
         return slider(*(self.__list + self.__isslider(other)))
 
-    def __mul__(self, other):
-        return self.__list * self.__isslider(other)
+    def __mul__(self, other: int) -> list:
+        return self.__list * other
 
-    def __eq__(self, other) -> bool:
+    def __eq__(self, other: (list, object)) -> bool:
         return self.__list == self.__isslider(other)
-
-    def __set__(self):
-        return set(self.__list)
 
     def __get_format_slice(self, slce: slice) -> slice:
         slice_format = [
@@ -46,30 +42,26 @@ class slider:
     def append(self, item):
         self.__list.append(item)
 
-    def split(self, sep = None):
+    def insert(self, index: int, item):
+        self.__list.insert(index, item)
+
+    def split(self, sep = None) -> list:
         try:
             self.__list = "".join(self.__list)
             self.__list = self.__list.split(sep)
             return self.__list
         except:
-            raise ArithmeticError("non- 'str' object has no attribute 'split'")
+            raise ArithmeticError(
+                "non- 'str' slider-object has no attribute 'split'")
 
     @classmethod
-    def __isslider(cls, obj):
+    def __isslider(cls, obj) -> list:
         if isinstance(obj, cls):
             return obj.__list
-
         return obj
 
     @classmethod
-    def __isstr(cls, obj):
+    def __isstr(cls, obj) -> str:
         if (len(obj) == 1) and (isinstance(obj[0], str)):
             obj = list(obj[0])
-
         return obj
-
-## append +
-## split +
-## reverse -
-## insert
-## pop
