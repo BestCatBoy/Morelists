@@ -28,7 +28,13 @@ class slider:
         return slider(*(self.__list + self.__isslider(other)))
 
     def __mul__(self, other: int) -> list:
-        return self.__list * other
+        __list = self.__list
+        try:
+            "".join(self.__list)
+            __list = "".join(self.__list)
+        finally:
+            self.__list = __list * other
+            return self.__list
 
     def __eq__(self, other: (list, object)) -> bool:
         return self.__list == self.__isslider(other)
